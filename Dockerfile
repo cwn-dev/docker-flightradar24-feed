@@ -24,7 +24,7 @@ COPY --from=builder /tmp/fr24 /fr24
 COPY entrypoint.sh /
 
 RUN apt-get update \
-    && apt-get install -y --no-install-recommends rtl-sdr \
+    && apt-get install -y --no-install-recommends rtl-sdr ca-certificates \
     && apt-get clean \
     && chmod 755 /entrypoint.sh 
 
