@@ -3,5 +3,7 @@ services:
         image: cwndev/flightradar24-feed:latest
         container_name: flightradar24-feed
         restart: always
+        environment:
+            - FR24_KEY=your_key
         devices:
             - "/dev/bus/usb/001/003"
