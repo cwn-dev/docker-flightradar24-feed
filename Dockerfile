@@ -1,6 +1,7 @@
 FROM debian:stretch-slim AS builder
 
 ARG fr24_url=https://repo-feed.flightradar24.com/rpi_binaries/fr24feed_1.0.29-10_armhf.tgz
+ENV FR24_KEY ''
 
 # Build dump1090, get some necessary packages and download fr24feed
 RUN apt-get update \
@@ -16,16 +17,15 @@ RUN apt-get update \
 # Todo: will Alpine work? It didn't on my first try but it may just be missing packages
 FROM debian:stretch-slim AS runner
 
-RUN apt-get update \
-    && apt-get install -y --no-install-recommends rtl-sdr \
-    && apt-get clean
-
 # Copy the necessary files to the final container
 COPY fr24feed.ini /etc/
 COPY --from=builder /tmp/dump1090/dump1090 /usr/lib/fr24/
 COPY --from=builder /tmp/fr24 /fr24
 COPY entrypoint.sh /
 
-ENV FR24_KEY ''
+RUN apt-get update \
+    && apt-get install -y --no-install-recommends rtl-sdr \
+    && apt-get clean \
+    && chmod 755 /entrypoint.sh 
 
 ENTRYPOINT ["/entrypoint.sh"]
