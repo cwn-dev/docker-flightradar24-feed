@@ -24,7 +24,8 @@ RUN apt-get update \
 COPY fr24feed.ini /etc/
 COPY --from=builder /tmp/dump1090/dump1090 /usr/lib/fr24/
 COPY --from=builder /tmp/fr24 /fr24
+COPY entrypoint.sh /
 
 ENV FR24_KEY ''
 
-ENTRYPOINT ["/fr24/fr24feed"]
+ENTRYPOINT ["/entrypoint.sh"]
