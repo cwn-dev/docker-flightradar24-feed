@@ -28,4 +28,6 @@ RUN apt-get update \
     && apt-get clean \
     && chmod 755 /entrypoint.sh 
 
+EXPOSE 8754
+
 ENTRYPOINT ["/entrypoint.sh"]
