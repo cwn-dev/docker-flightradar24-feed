@@ -26,6 +26,5 @@ COPY --from=builder /tmp/dump1090/dump1090 /usr/lib/fr24/
 COPY --from=builder /tmp/fr24 /fr24
 
 ENV FR24_KEY ''
-RUN sed -i 's/fr24key=".\+"/fr24key="${FR24_KEY}"/g' /etc/fr24feed.ini
 
 ENTRYPOINT ["/fr24/fr24feed"]
